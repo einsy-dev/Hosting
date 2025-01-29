@@ -1,0 +1,14 @@
+services:
+  master:
+    container_name: master
+    build: .
+    ports:
+      - "8080:80"
+    env_file:
+      - .env
+    networks:
+      - master-network
+
+networks:
+  master-network:
+    driver: bridge
