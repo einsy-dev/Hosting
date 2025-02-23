@@ -1,5 +1,9 @@
 name: Docker Compose Deploy
 
+env:
+  MASTER: app/master
+  REPO: https://github.com/einsy-dev/Portfolio.git
+
 on:
   push:
     branches: ["release"]
@@ -27,4 +31,20 @@ jobs:
               sudo curl -fsSL https://get.docker.com | sh
             else
               echo "Docker is already installed."
+            fi
+
+      - name: Deploy to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            if [ -d "$MASTERА" ]; then
+              echo "Repository is already pulled. Skipping pull..."
+              git pull origin release
+            else
+              echo "Repository is not pulled. Pulling..."
+              git clone "$REPO" "$MASTER"
             fi
