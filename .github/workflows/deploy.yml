@@ -1,8 +1,7 @@
 name: Docker Compose Deploy
 
 env:
-  MASTER: app/master
-  REPO: https://github.com/einsy-dev/Portfolio.git
+  MASTER_DIR: app/master
 
 on:
   push:
@@ -11,7 +10,7 @@ on:
     branches: ["release"]
 
 jobs:
-  deploy:
+  check:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,12 +26,16 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             if ! command -v docker &> /dev/null; then
-              echo "Docker is not installed. Installing..."
-              sudo curl -fsSL https://get.docker.com | sh
+            echo "Docker is not installed. Installing..."
+            sudo curl -fsSL https://get.docker.com | sh
             else
-              echo "Docker is already installed."
+            echo "Docker is already installed."
             fi
 
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Deploy to server
         uses: appleboy/ssh-action@master
         with:
@@ -41,10 +44,25 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            if [ -d "${{ env.MASTER }}" ]; then
+            if [ -d "${{ env.MASTER_DIR }}" ]; then
               echo "Repository is already pulled. Skipping pull..."
               git pull origin release
             else
               echo "Repository is not pulled. Pulling..."
-              git clone ${{ env.REPO }} -b release ${{ env.MASTER }}
+              git clone ${{ github.repository }} -b release ${{ env.MASTER_DIR }}
             fi
+
+            cd ${{ env.MASTER_DIR }}
+
+      - name: Run Docker Compose
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd ${{ env.MASTER_DIR }}
+            if [ -f "docker-compose.ym ]; then
+            docker compose down --remove-orphans
+            docker compose up -d
