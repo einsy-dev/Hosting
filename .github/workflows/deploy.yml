@@ -46,6 +46,7 @@ jobs:
           script: |
             if [ -d "${{ env.MASTER_DIR }}" ]; then
               echo "Repository is already pulled. Skipping pull..."
+              cd ${{ env.MASTER_DIR }}
               git pull origin release
             else
               echo "Repository is not pulled. Pulling..."
