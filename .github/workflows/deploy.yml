@@ -52,8 +52,6 @@ jobs:
               git clone ${{ github.repository }} -b release ${{ env.MASTER_DIR }}
             fi
 
-            cd ${{ env.MASTER_DIR }}
-
       - name: Run Docker Compose
         uses: appleboy/ssh-action@master
         with:
