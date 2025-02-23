@@ -41,11 +41,10 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            echo "1 $MASTER, 2 ${{ env.MASTER }}"
-            if [ -d "$MASTERА" ]; then
+            if [ -d "${{ env.MASTER }}" ]; then
               echo "Repository is already pulled. Skipping pull..."
               git pull origin release
             else
               echo "Repository is not pulled. Pulling..."
-              git clone https://github.com/einsy-dev/Portfolio.git -b release $MASTER
+              git clone ${{ env.REPO }} -b release ${{ env.MASTER }}
             fi
