@@ -41,6 +41,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
+            echo "1 $MASTER, 2 ${{ env.MASTER }}"
             if [ -d "$MASTERА" ]; then
               echo "Repository is already pulled. Skipping pull..."
               git pull origin release
