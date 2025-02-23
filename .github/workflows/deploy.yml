@@ -46,5 +46,5 @@ jobs:
               git pull origin release
             else
               echo "Repository is not pulled. Pulling..."
-              git clone "$REPO" "$MASTER"
+              git clone "$REPO $MASTER"
             fi
