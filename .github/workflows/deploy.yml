@@ -66,6 +66,6 @@ jobs:
               if [ ! -f ".env" ]; then
                 touch .env
               fi
-              docker compose down --remove-orphans
-              docker compose up -d
+              sudo docker compose down --remove-orphans
+              sudo docker compose up -d
             fi
