@@ -64,5 +64,6 @@ jobs:
           script: |
             cd ${{ env.MASTER_DIR }}
             if [ -f "docker-compose.ym ]; then
-            docker compose down --remove-orphans
-            docker compose up -d
+              docker compose down --remove-orphans
+              docker compose up -d
+            fi
