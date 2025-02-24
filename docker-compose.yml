@@ -5,5 +5,5 @@ services:
     ports:
       - "80:80"
     volumes:
-      - /app/volumes/client:/app/client/out
-      - /app/volumes/nginx:/etc/nginx:ro
+      - ~/app/volumes/client:/app/client
+      - ~/app/volumes/nginx:/etc/nginx
