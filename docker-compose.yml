@@ -4,6 +4,4 @@ services:
     build: .
     ports:
       - "80:80"
-    volumes:
-      - ~/app/volumes/client:/app/client
-      - ~/app/volumes/nginx:/etc/nginx
+
