@@ -45,7 +45,8 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            if [ -d "${{ env.MASTER_DIR }}" ]; then
+            cd ${{ env.MASTER_DIR }}
+            if [ -d ".git" ]; then
               echo "Repository is already pulled. Skipping pull..."
               cd ${{ env.MASTER_DIR }}
               git pull origin release
