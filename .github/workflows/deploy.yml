@@ -47,6 +47,7 @@ jobs:
           script: |
             if [ -d "${{ env.MASTER_DIR }}/.git" ]; then
               echo "Found repository. Pulling..."
+              cd ${{ env.MASTER_DIR }}
               git pull origin release || echo "Failed to pull repository." && exit 1
               echo "Repository is updated."
             else
