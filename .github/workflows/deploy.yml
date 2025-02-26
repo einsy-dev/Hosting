@@ -47,12 +47,13 @@ jobs:
           script: |
             cd ${{ env.MASTER_DIR }}
             if [ -d ".git" ]; then
-              echo "Repository is already pulled. Skipping pull..."
-              cd ${{ env.MASTER_DIR }}
+              echo "Found repository. Pulling..."
               git pull origin release
+              echo "Repository is updated."
             else
               echo "Repository is not pulled. Pulling..."
-              git clone ${{ github.repositoryUrl }} -b release ${{ env.MASTER_DIR }}
+              git clone ${{ github.repositoryUrl }} -b release --single-branch ./
+              echo "Repository is pulled."
             fi
 
       - name: Run Docker Compose
