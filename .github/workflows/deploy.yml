@@ -12,7 +12,7 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -45,14 +45,13 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd ${{ env.MASTER_DIR }}
-            if [ -d ".git" ]; then
+            if [ -d "${{ env.MASTER_DIR }}/.git" ]; then
               echo "Found repository. Pulling..."
               git pull origin release
               echo "Repository is updated."
             else
               echo "Repository is not pulled. Pulling..."
-              git clone ${{ github.repositoryUrl }} -b release --single-branch ./
+              git clone ${{ github.repositoryUrl }} -b release --single-branch ${{ env.MASTER_DIR }}
               echo "Repository is pulled."
             fi
 
@@ -72,14 +71,3 @@ jobs:
               sudo docker compose down --remove-orphans
               sudo docker compose up -d --build
             fi
-
-      - name: Clean up
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          script: |
-            cd ${{ env.MASTER_DIR }}
-            rm -f ./*
