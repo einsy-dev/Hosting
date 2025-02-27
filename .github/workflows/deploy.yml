@@ -1,7 +1,7 @@
 name: Deploy master to server
 
 env:
-  MASTER_DIR: app/master
+  MASTER_DIR: app
 
 on:
   push:
