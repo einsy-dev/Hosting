@@ -66,7 +66,7 @@ jobs:
           script: |
             cd ${{ env.MASTER_DIR }}
             rm -f .env && touch .env
-            echo echo "PG_USER=${{ secrets.PG_USER }}" >> .env
+            echo "PG_USER=${{ secrets.PG_USER }}" >> .env
             echo "PG_PASSWORD=${{ secrets.PG_PASSWORD }}" >> .env
             echo "PGADMIN_EMAIL=${{ secrets.PGADMIN_EMAIL }}" >> .env
             echo "PGADMIN_PASSWORD=${{ secrets.PGADMIN_PASSWORD }}" >> .env
