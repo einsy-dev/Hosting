@@ -67,8 +67,19 @@ jobs:
             cd ${{ env.MASTER_DIR }}
             if [ ! -f ".env" ]; then
               touch .env
+            fi
+            source .env
+            if [ -n "$PG_USER"  ]; then
               echo "PG_USER=${{ secrets.PG_USER }}" >> .env
+            fi
+            if [ -n "$PG_PASSWORD"  ]; then
               echo "PG_PASSWORD=${{ secrets.PG_PASSWORD }}" >> .env
+            fi
+            if [ -n "$PGADMIN_EMAIL"  ]; then
+              echo "PGADMIN_EMAIL=${{ secrets.PGADMIN_EMAIL }}" >> .env
+            fi
+            if [ -n "$PGADMIN_PASSWORD"  ]; then
+              echo "PGADMIN_PASSWORD=${{ secrets.PGADMIN_PASSWORD }}" >> .env
             fi
 
       - name: Run Docker Compose
