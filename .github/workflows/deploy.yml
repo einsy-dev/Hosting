@@ -56,6 +56,21 @@ jobs:
               echo "Repository is pulled."
             fi
 
+      - name: Setup .env
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd ${{ env.MASTER_DIR }}
+            if [ ! -f ".env" ]; then
+              touch .env
+              echo "PG_USER=${{ secrets.PG_USER }}" >> .env
+              echo "PG_PASSWORD=${{ secrets.PG_PASSWORD }}" >> .env
+            fi
+
       - name: Run Docker Compose
         uses: appleboy/ssh-action@master
         with:
