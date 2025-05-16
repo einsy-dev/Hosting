@@ -6,7 +6,7 @@ services:
     container_name: nginx
     image: nginx:latest
     ports:
-      - "3000:80"
+      - "81:80"
       - "443:443"
       - "5432:5432"
     volumes:
@@ -41,24 +41,17 @@ services:
     networks:
       - backend
 
-  # redis:
-  #   depends_on:
-  #     - nginx
-  #   container_name: redis
-  #   image: redis:latest
-  #   restart: unless-stopped
-  #   ports:
-  #     - 6379:6379
-  #   networks:
-  #     - backend
-  # gogs:
-  #   depends_on:
-  #     - nginx
-  #   container_name: gogs
-  #   image: gogs/gogs:latest
-  #   env_file:
-  #     - .env
-  #   restart: unless-stopped
+  gogs:
+    container_name: gogs
+    image: gogs/gogs:latest
+    env_file:
+      - .env
+    volumes:
+      - ./volumes/gogs:/data
+    restart: unless-stopped
+    networks:
+      - backend
+
 networks:
   backend:
     driver: bridge
