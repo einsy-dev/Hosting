@@ -14,7 +14,7 @@ services:
       - ./volumes/nginx/conf.d:/etc/nginx/conf.d:ro
       - ./volumes/nginx/www:/etc/nginx/html:ro
       - ./volumes/nginx/logs:/var/log/nginx:rw
-      # - /etc/letsencrypt/live:/etc/nginx/certs:ro
+      - /etc/letsencrypt/live:/etc/nginx/certs:ro
     restart: unless-stopped
     networks:
       - backend
