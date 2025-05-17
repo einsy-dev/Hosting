@@ -1,8 +1,5 @@
 services:
   nginx:
-    depends_on:
-      - postgres
-      - pgadmin
     container_name: nginx
     image: nginx:latest
     ports:
@@ -10,7 +7,7 @@ services:
       - "443:443"
       - "5432:5432"
     volumes:
-      - /etc/letsencrypt:/etc/nginx/certs:rw
+      - /etc/letsencrypt:/etc/nginx/certs:ro
       - ./volumes/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./volumes/nginx/conf.d:/etc/nginx/conf.d:ro
       - ./volumes/nginx/www:/var/html/www/:ro
@@ -25,7 +22,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./volumes/postgresql:/var/lib/postgresql/data
+      - ./volumes/postgresql:/var/lib/postgresql/data:rw
     restart: unless-stopped
     networks:
       - backend
@@ -37,9 +34,6 @@ services:
     image: dpage/pgadmin4:latest
     env_file:
       - .env
-    volumes:
-      - ./volumes/pgadmin:/var/lib/pgadmin
-      - ./volumes/pgadmin/servers.json:/pgadmin4/servers.json
     restart: unless-stopped
     networks:
       - backend
@@ -50,7 +44,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./volumes/gogs:/data
+      - ./volumes/gogs:/data:rw
     restart: unless-stopped
     networks:
       - backend
