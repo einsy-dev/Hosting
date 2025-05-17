@@ -9,7 +9,6 @@ services:
       - "80:80"
       - "443:443"
       - "5432:5432"
-      - "1022:1022"
     volumes:
       - /etc/letsencrypt:/etc/nginx/certs:rw
       - ./volumes/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
@@ -38,6 +37,9 @@ services:
     image: dpage/pgadmin4:latest
     env_file:
       - .env
+    volumes:
+      - ./volumes/pgadmin:/var/lib/pgadmin
+      - ./volumes/pgadmin/servers.json:/pgadmin4/servers.json
     restart: unless-stopped
     networks:
       - backend
