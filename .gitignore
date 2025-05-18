@@ -5,3 +5,4 @@ logs/
 certs/
 gogs/
 postgresql/
+pgadmin/

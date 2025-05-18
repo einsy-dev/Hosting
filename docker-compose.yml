@@ -34,6 +34,8 @@ services:
     image: dpage/pgadmin4:latest
     env_file:
       - .env
+    volumes:
+      - ./volumes/pgadmin:/var/lib/pgadmin:rw
     restart: unless-stopped
     networks:
       - backend

@@ -14,3 +14,5 @@ PgAdmin - Postgresql - Gogs(git) - Server proxy - Static files server
 ```bash
  sudo certbot certonly --standalone
 ```
+
+Errors may occur if folder permitions are set incorectly
